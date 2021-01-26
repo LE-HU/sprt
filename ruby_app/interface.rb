@@ -1,6 +1,7 @@
 class Interface
   def self.get_opt(args)
     options = {}
+
     opts = OptionParser.new do |opts|
       opts.banner = 'Usage: parser.rb [options]'
 
