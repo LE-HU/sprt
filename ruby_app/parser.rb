@@ -2,27 +2,9 @@
 # ruby 2.7.2
 
 require 'optparse'
+require_relative 'interface'
 class Parser
   class << self
-    def parse(_args)
-      options = {}
-      opts = OptionParser.new do |opts|
-        opts.on('-f', '--file FILE' 'Log file') do |file|
-          options[:file] = file
-        end
-
-        opts.on('-a', 'List all views') do
-          options[:all] = true
-        end
-
-        opts.on('-u', 'List unique views') do
-          options[:uniq] = true
-        end
-      end
-
-      options
-    end
-
     def all_views(log)
       File.open(log) do |f|
         f.each_with_object(Hash.new(0)) do |line, hash|
@@ -59,7 +41,7 @@ class Parser
   end
 end
 
-options = Parser.parse(ARGV)
+options = Interface.get_opt(ARGV)
 
 Parser.list_all_views(options[:file]) if options[:all]
 Parser.list_unique_views(options[:file]) if options[:uniq]
